@@ -30,12 +30,23 @@ A quick **serchsploit** search on **osCommerce 2.3.4** shows the following vulne
 
 ![image](https://user-images.githubusercontent.com/99097743/170889834-7bc4cd09-df46-41b0-ac76-48e7dc3e57ae.png)
 
-
-**Exploit title: osCommerce 2.3.4.1 - Remote Code Execution (PATH: php/webapps/44374.py) **
+**Exploit title: osCommerce 2.3.4.1 - Remote Code Execution (PATH: php/webapps/44374.py)**
 
 * It is an interesting exploit as it does not require credentials.
 * An unauthorized attacker can reinstall, ff installation directory has not been removed.  
 * During the reinstallation process, OS commerce does not attempt to do any authentication, it simple executes the code. 
 
+After updating the base_url and target_url inside 44373.py:
 
+![image](https://user-images.githubusercontent.com/99097743/170891035-bec09bb0-bf5d-4d8d-99d1-4536bb19aaf0.png)
+
+We need to launch the exploit:
+
+```sh
+  python ./44374_modified.py
+  ```
+  
+  ![image](https://user-images.githubusercontent.com/99097743/170891095-908551f8-3745-40a3-b618-8c2f0616985f.png)
+
+  
 
