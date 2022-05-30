@@ -5,7 +5,7 @@
 **NMAP Scan**
 
 ```sh
-  nmap -sV -sC -p- 10.10.3.65
+  nmap -sV -sC -p- 10.10.83.191
   ```
 
 - To see the versions of the services running (**-sV**)
