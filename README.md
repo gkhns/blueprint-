@@ -1,7 +1,6 @@
 #Windows # #
 
 
-
 **NMAP Scan**
 
 ```sh
@@ -18,13 +17,18 @@
 * ?
 * ?
 
-http://10.10.3.65 --> takes us to the following website. 
+http://10.10.83.191:8080 --> takes us to the following website.
 
-OSCommerce is an e-commerce and online store-management software program
+
+![image](https://user-images.githubusercontent.com/99097743/170898695-0f88913c-e395-43be-a7f8-ded690c878f7.png)
+
+
+
+
 
 (Ref: https://en.wikipedia.org/wiki/OsCommerce)
 
-![image](https://user-images.githubusercontent.com/99097743/170889343-1ac2db1b-ee91-4ea9-8594-88bd6dda347b.png)
+OSCommerce is an e-commerce and online store-management software program
 
 A quick **serchsploit** search on **osCommerce 2.3.4** shows the following vulnerabilities:
 
