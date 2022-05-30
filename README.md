@@ -11,7 +11,7 @@
 - To scan all ports from 1 through 65535 (**-p-**)
 
 
- Open Ports
+ Open Ports:
 
 * 80/tcp
 * 135/tcp
